@@ -18,4 +18,4 @@ The Policy just allows for putting logs to Cloudwatch for these instances.  You'
 
 More details can be found on this post:
 
-[How to Unify AWS ECS Logs in CloudWatch (and SSM Run Command)](http://start.jcolemorrison.com/how-to-unify-aws-ecs-logs-in-cloudwatch-and-ssm)
+[How to Unify AWS ECS Logs in CloudWatch (and SSM Run Command)](http://start.jcolemorrison.com/how-to-setup-aws-ecs-logs-in-cloudwatch-and-ssm)
