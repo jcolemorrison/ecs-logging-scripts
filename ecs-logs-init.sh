@@ -7,7 +7,7 @@ Content-Type: text/x-shellscript; charset="us-ascii"
 #!/bin/bash
 
 # cluster to join REPLACE YOURCLUSTERNAMEHERE OBVIOUSLY
-echo ECS_CLUSTER=ECSLogsCluster >> /etc/ecs/ecs.config
+echo ECS_CLUSTER=YOURCLUSTERNAMEHERE >> /etc/ecs/ecs.config
 
 # Install awslogs and the jq JSON parser
 yum install -y awslogs jq
