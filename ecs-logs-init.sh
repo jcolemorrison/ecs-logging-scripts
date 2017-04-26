@@ -6,7 +6,7 @@ MIME-Version: 1.0
 Content-Type: text/x-shellscript; charset="us-ascii"
 #!/bin/bash
 
-# cluster to join
+# cluster to join REPLACE `YOURCLUSTERNAMEHERE` OBVIOUSLY
 echo ECS_CLUSTER=YOURCLUSTERNAMEHERE >> /etc/ecs/ecs.config
 
 # Install awslogs and the jq JSON parser
