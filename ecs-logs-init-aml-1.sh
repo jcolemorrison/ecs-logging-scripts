@@ -90,7 +90,15 @@ sed -i -e "s/region = us-east-1/region = $region/g" /etc/awslogs/awscli.conf
 # Install AWS SSM agent RPM for later mass commands
 # Not present by default on ECS Optimized AMI:
 # https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-manual-agent-install.html#agent-install-al
-yum install -y https://amazon-ssm-$region.s3.amazonaws.com/latest/linux_amd64/amazon-ssm-agent.rpm
+
+# For x86_64 instances, so what you're probably using
+yum install -y https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_amd64/amazon-ssm-agent.rpm
+
+# For arm64 instances, you'd run this:
+# yum install -y https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_arm64/amazon-ssm-agent.rpm
+
+# For 32-bit:
+# yum install -y https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_386/amazon-ssm-agent.rpm
 
 --==BOUNDARY==
 Content-Type: text/upstart-job; charset="us-ascii"
@@ -117,7 +125,11 @@ script
 	sed -i -e "s/{cluster}/$cluster/g" /etc/awslogs/awslogs.conf
 	sed -i -e "s/{container_instance_id}/$container_instance_id/g" /etc/awslogs/awslogs.conf
 	
+	# start aws logs
 	service awslogs start
 	chkconfig awslogs on
+
+	# start ssm
+	start amazon-ssm-agent
 end script
 --==BOUNDARY==--
