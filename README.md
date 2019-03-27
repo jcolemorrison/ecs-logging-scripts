@@ -11,7 +11,9 @@ To use -
 "logs:DescribeLogStreams"
 ```
 
-2. paste in the `ecs-logs-init.sh` contents to your instance or Launch Configuration's User Data under `Advanced Details`.
+2. Grab either `ecs-logs-init-aml-1.sh`for Amazon Linux 1 based AMIs or `ecs-logs-init-aml-2.sh` for Amazon Linux 2 AMIs.  If you're keeping up to date with the ECS Optimized Image, you'll need the Amazon Linux 2 Script.
+
+3. paste in the contents to your instance or Launch Configuration's User Data under `Advanced Details`.
 
 ---
 
@@ -45,6 +47,28 @@ You can modify the log group and log stream name to be whatever you'd like.
 **f)** Install the SSM Agent to allow for `Run Command` (not present by default on ECS Optimized AMIs)
 
 The Policy just allows for putting logs to Cloudwatch for these instances.  You're ECS Container instances will generally have a role for the instances.  Attach this policy to that role as well.
+
+---
+
+## Amazon Linux 2 Update
+
+Amazon's newest Amazon Linux 2 AMI changes up how longs work.  First up, they're no longer referenced to as `awslogs`, but instead of `awslogsd`.  Second, to start and top logs, you'll be using the `systemctl` instead of `service`.  For example, the new start command to run logs is:
+
+`systemctl start awslogsd`
+
+And to start the service on each boot:
+
+`systemctl enable awslogsd.service`
+
+If you try to to use the old script in Amazon Linux 2, you'll get all sorts of nasty errors like...
+
+```
+cwlogs.push.stream - WARNING - somenumber - Thread-1 - No file is found with given path '/var/log/docker'.
+```
+
+... and so on.
+
+---
 
 More details can be found on this post:
 
